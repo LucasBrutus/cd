@@ -1,1 +1,22 @@
+name: OWASP
 
+on:
+    push:
+        branches:
+        - main
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Install NPM dependencies
+        run: 
+          npm install --production --unsafe-perm
+      - uses: sburris/dependency-check-action@master
+        with:
+          Project-Name: TestApp
+      - name: Archive dependency check reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: reports
